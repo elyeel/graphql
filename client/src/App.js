@@ -5,6 +5,7 @@ import {
 	useQuery
 } from '@apollo/client';
 import BookList from './components/BookList';
+import AddBook from './components/AddBook'
 
 // apollo client setup
 const client = new ApolloClient({
@@ -16,8 +17,9 @@ function App() {
 	return (
 		<ApolloProvider client={client}>
 			<div id="main">
-				<h1>Risyardi's GraphQL</h1>
+				<h1>Risyardi's Reading List with GraphQL</h1>
 				<BookList client={client} useQuery={useQuery} />
+				<AddBook/>
 			</div>
 		</ApolloProvider>
 	);
