@@ -1,13 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
-
-const getAuthorsQuery = gql`
-	{
-		authors {
-			name
-			id
-		}
-	}
-`;
+import { useQuery } from '@apollo/client';
+import { getAuthorsQuery } from '../queries/queries';
 
 // const displayAuthors = (authors) => {
 // 	authors.map((author) => <option>{author.name}</option>);
@@ -30,11 +22,16 @@ export default function AddBook({ client }) {
 			</div>
 			<div className="field">
 				<label>Author:</label>
-        <select>
-          {loading && <option disabled>loading...</option>}
+				<select>
+					{loading && <option disabled>loading...</option>}
 					<option>Select author</option>
 					{/* {this.displayAuthors()} */}
-					{data && data.authors.map((author) => <option key={author.id} value={author.id}>{author.name}</option>)}
+					{data &&
+						data.authors.map((author) => (
+							<option key={author.id} value={author.id}>
+								{author.name}
+							</option>
+						))}
 				</select>
 			</div>
 			<button>+</button>
