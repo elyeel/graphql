@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { getAuthorsQuery, addBookMutation } from '../queries/queries';
+import {
+	getAuthorsQuery,
+	addBookMutation,
+	getBooksQuery
+} from '../queries/queries';
 
 // const displayAuthors = (authors) => {
 // 	authors.map((author) => <option>{author.name}</option>);
@@ -11,7 +15,7 @@ export default function AddBook({ client }) {
 	const [ book, setBook ] = useState({ name: '', genre: '', authorId: '' });
 	const [
 		addBook,
-		{ loading: mutationLoading, error: mutationError, data: mutationResult }
+		{ loading: mutationLoading, error: mutationError, data: mutationResult } //figuring out when to use this line....
 	] = useMutation(addBookMutation);
 
 	// console.log(data);
@@ -25,9 +29,14 @@ export default function AddBook({ client }) {
 	const submitForm = (e) => {
 		e.preventDefault();
 		addBook({
-			variables: { name: book.name, genre: book.genre, authorId: book.authorId }
+			variables: {
+				name: book.name,
+				genre: book.genre,
+				authorId: book.authorId
+			},
+			refetchQueries: [ { query: getBooksQuery } ]
 		});
-		console.log(mutationResult)
+		console.log(mutationResult);
 	};
 
 	return (

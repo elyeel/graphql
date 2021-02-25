@@ -4,7 +4,7 @@ import { getBooksQuery } from '../queries/queries';
 export default function BookList({ client }) {
 	const { loading, error, data } = useQuery(getBooksQuery);
 
-	console.log(data);
+	// console.log(data);
 
 	return (
 		<div>
