@@ -12,7 +12,6 @@ export default function BookList({ client }) {
 				{loading && <p>Loading .....</p>}
 				{error && <li>Error</li>}
 				{data && data.books.map((book) => <li key={book.id}>{book.name}</li>)}
-				<li>Book Name</li>
 			</ul>
 		</div>
 	);
