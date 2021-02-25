@@ -9,15 +9,25 @@ import { getAuthorsQuery, addBookMutation } from '../queries/queries';
 export default function AddBook({ client }) {
 	const { loading, error, data } = useQuery(getAuthorsQuery);
 	const [ book, setBook ] = useState({ name: '', genre: '', authorId: '' });
-	const [ addBook, { mutationResult } ] = useMutation(addBookMutation);
+	const [
+		addBook,
+		{ loading: mutationLoading, error: mutationError, data: mutationResult }
+	] = useMutation(addBookMutation);
 
-	console.log(data);
-	const submitForm = (e) => {
+	// console.log(data);
+	const valueChange = (e) => {
 		e.preventDefault();
 		const { name, value } = e.target;
 		setBook((prev) => ({ ...prev, [name]: value }));
-		console.log(book);
-		addBook();
+		// console.log(book);
+	};
+
+	const submitForm = (e) => {
+		e.preventDefault();
+		addBook({
+			variables: { name: book.name, genre: book.genre, authorId: book.authorId }
+		});
+		console.log(mutationResult)
 	};
 
 	return (
@@ -26,7 +36,7 @@ export default function AddBook({ client }) {
 				<label>Book name:</label>
 				<input
 					type="text"
-					onChange={submitForm}
+					onChange={valueChange}
 					value={book.name}
 					name="name"
 				/>
@@ -35,14 +45,14 @@ export default function AddBook({ client }) {
 				<label>Genre:</label>
 				<input
 					type="text"
-					onChange={submitForm}
+					onChange={valueChange}
 					value={book.genre}
 					name="genre"
 				/>
 			</div>
 			<div className="field">
 				<label>Author:</label>
-				<select onChange={submitForm} value={book.authorId} name="authorId">
+				<select onChange={valueChange} value={book.authorId} name="authorId">
 					{loading && <option disabled>loading...</option>}
 					<option>Select author</option>
 					{/* {this.displayAuthors()} */}
