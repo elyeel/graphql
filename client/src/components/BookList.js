@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { getBooksQuery } from '../queries/queries';
+import BookDetails from './BookDetails'
 
 export default function BookList({ client }) {
 	const { loading, error, data } = useQuery(getBooksQuery);
@@ -13,6 +14,7 @@ export default function BookList({ client }) {
 				{error && <li>Error</li>}
 				{data && data.books.map((book) => <li key={book.id}>{book.name}</li>)}
 			</ul>
+			<BookDetails/>
 		</div>
 	);
 }
